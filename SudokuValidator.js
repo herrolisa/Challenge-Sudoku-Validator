@@ -22,16 +22,10 @@ SudokuValidator.prototype.validate = function(num){
   }
   for (var i = 0; i < num; i++) {
     for (var i = 0; i < num ; i++) {
-      var truthy1 = this.sudoku[i].every(function (elem) {
-        return checkAgainst.indexOf(elem) !== -1;
+      var truthy = this.sudoku[i].every(function (elem, idx, arr) {
+        return checkAgainst.indexOf(elem) !== -1 && arr.indexOf(elem) === arr.lastIndexOf(elem);
       });
-      if (truthy1 === false){
-        return false;
-      }
-      var truthy2 = this.sudoku[i].every(function (elem, idx, arr) {
-        return arr.indexOf(elem) === arr.lastIndexOf(elem);
-      })
-      if (truthy2 === false){
+      if (truthy === false){
         return false;
       }
     }
