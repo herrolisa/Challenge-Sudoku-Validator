@@ -20,14 +20,28 @@ SudokuValidator.prototype.validate = function(num){
   for (var i = 1; i < num + 1; i++) {
     checkAgainst.push(i);
   }
-  for (var i = 0; i < num; i++) {
-    for (var i = 0; i < num ; i++) {
-      var truthy = this.sudoku[i].every(function (elem, idx, arr) {
+  // Check Rows
+  for (var j = 0; j < num; j++) {
+    for (var k = 0; k < num ; k++) {
+      var rowTruthy = this.sudoku[j].every(function (elem, idx, arr) {
         return checkAgainst.indexOf(elem) !== -1 && arr.indexOf(elem) === arr.lastIndexOf(elem);
       });
-      if (truthy === false){
+      if (rowTruthy === false){
         return false;
       }
+    }
+  }
+  // Check Columns
+  for (var l = 0; l < num; l++) {
+    var columnArr = [];
+    for (var m = 0; m < num; m++) {
+      columnArr.push(this.sudoku[m][l]);
+    }
+    var colTruthy = columnArr.every(function (elem, idx, arr) {
+      return arr.indexOf(elem) === arr.lastIndexOf(elem);
+    })
+    if (colTruthy === false){
+      return false;
     }
   }
   return true;
